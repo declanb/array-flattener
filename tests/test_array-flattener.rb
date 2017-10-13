@@ -1,11 +1,21 @@
 require "array-flattener/array-flattener.rb"
 require "test/unit"
+require 'benchmark'
 
 class TestArrayFlattener < Test::Unit::TestCase
 
   def test_flatten
     test_array = [1, 2, 3, [4, 5], [[6]], 7, [[[8, 9], 10], 11], [], [[[[[[[[[[[[[[[[[[[[[1000]]]]]]]]]]]]]]]]]]]]]]
-    assert_equal(test_array.flatten, flatten(test_array))
+    puts Benchmark.measure {
+      50_000.times {
+        assert_equal(test_array.flatten, flatten(test_array))
+      }
+    }
+    puts Benchmark.measure {
+      50_000.times {
+        assert_equal(test_array.flatten, flatten2(test_array))
+      }
+    }
   end
 
   def test_flatten_with_char

@@ -16,3 +16,16 @@ def check_only_numeric(arr)
     return true
   end
 end
+
+def flatten2(array)
+  result = []
+  array.each do |element|
+    unless element.is_a? Array
+      result << element
+    else
+      flatten2(element).each {|element| result << element}
+    end
+  end
+
+  result
+end
